@@ -57,6 +57,7 @@
         <link href="css/style.css" rel="stylesheet">
         <link href="css/responsive.css" rel="stylesheet">
         <script src="js/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class=" fix">
@@ -205,7 +206,7 @@
 				<div class="col-sm-6 col-sm-push-6 col-text">
                     <style>
 	.btn[_ngcontent-tfp-c61] {
-		background-color: #f29c2c;
+		background-color: #bc7008;
 		border: none;
 		padding: 10px 20px;
 		width: 100%;
@@ -282,9 +283,10 @@
 	.banner_widget_wrap[_ngcontent-tfp-c61] {
 		border-radius: 40px;
 		overflow: hidden;
-		width: 360px;
+		width: 400px;
 		margin: 0px auto;
 		max-width: 100%;
+		border: 5px solid #c19d5f;
 	}
 
 	.banner[_ngcontent-tfp-c61] .bottom[_ngcontent-tfp-c61] .header_stats[_ngcontent-tfp-c61] {
@@ -435,7 +437,7 @@
 		font-size: 15px;
 		line-height: 22px;
 		font-family: 'Oswald';
-		background-color: #f2992ad4;
+		background-color: #bc7008;
 		display: flex;
 		justify-content: space-between;
 		padding: 16px 32px 20px;
@@ -685,12 +687,54 @@
 						</a>
 					</div>
 					<div class="col-sm-6" style="padding-left: 5px;padding-right: 5px;">
-						<a href="#" style="background-color: #222121;font-size: 14px;" _ngcontent-tfp-c61="" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-							<div _ngcontent-tfp-c61=""><span _ngcontent-tfp-c61="">REFFERAL</span></div>
-						</a>
+						<button _ngcontent-tfp-c61="" onclick="addToWallet()" style="background-color: #222121;font-size: 14px;" class="btn btn-primary">
+							<div _ngcontent-tfp-c61=""><span _ngcontent-tfp-c61="">ADD RGT TO METAMASK</span></div>
+						</button>
 					</div>
 				</div>
 			</div>
+			<script>
+				function addToWallet() {
+           
+
+		   web3.currentProvider.sendAsync({
+			 method: 'wallet_watchAsset',
+			 params: {
+				 'type': 'ERC20',
+				 'options': {
+					 'address': '0xb75A102a8f31e05B9db270ddBB4F335e68BaAC23',
+					 'symbol': 'RTG',
+					 'decimals': '18',
+					 'image': src='https://resmigold.com/images/logo-rgt.png',
+				 },
+			 },
+			 id: Math.round(Math.random() * 100000)
+		 }, function (err, data) {
+			 if (!err) {
+				 if (data.result) {
+					 console.log('Token added');
+					 Swal.fire({
+title: 'Token Added',
+icon: 'success',
+html: 'Token added to your wallet.',
+showCloseButton: true,
+showCancelButton: true,
+focusConfirm: false,
+reverseButtons: true,
+focusCancel: true,
+cancelButtonText: 'Exit',
+})
+				 } else {
+					 console.log(data);
+					 console.log('Some error');
+				 }
+			 } else {
+				 console.log(err.message);
+			 }
+		 });
+}
+
+			</script>
 			<div id="connected" style="display: none" _ngcontent-tfp-c61="" class="styles_button ng-star-inserted">
 				<!-- <div id="connected" style="display: block"  _ngcontent-tfp-c61="" class="styles_button ng-star-inserted"> -->
 				<div class="row">
@@ -700,39 +744,22 @@
 					<div class="col-sm-6">
 						<button _ngcontent-tfp-c61="" data-fancybox="" data-src="#hidden-content1" class="btn btn-primary">BUY WITH USDT</button>
 					</div>
-				</div>
-				<a _ngcontent-tfp-c61="" onclick="openTransak()" class="btn btn-primary">
-					BUY BNB WITH CARD
-				</a>
-				<button class="btn-link" id="btn-disconnect" style="color: #f29c2c;text-decoration: underline;">
+					<div class="col-sm-6">
+						<button _ngcontent-tfp-c61="" onclick="openTransak()" class="btn btn-primary">BUY WITH CARD</button>
+					</div>
+					<div class="col-sm-6">
+						<button _ngcontent-tfp-c61="" data-fancybox="" data-src="#hidden-content5" class="btn btn-primary">REFFERAL</button>
+					</div>
+
+			</div>
+				<button _ngcontent-tfp-c61="" id="btn-disconnect" class="btn btn-primary">
 					Disconnect wallet
 				</button>
 			</div>
 		</div>
 	</div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Isi modal di sini -->
-                <p>Hello, this is the modal content!</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- https://goerli.etherscan.io/address/0x4a30552102b220C1b12394Bc8dfFFfa4D89EA27a#code -->
 
 <!-- <div style="display: none;max-width: 100%;" id="hidden-content2">
 	<iframe title="Transak On/Off Ramp Widget" src="https://global-stg.transak.com?apiKey=be347173-e475-4492-b42a-3d3ffc850dba&amp;[QUERY_PARAMETERS]" frameborder="no" allowtransparency="true" allowfullscreen="" style="display: block; width: 100%; max-height: 625px; max-width: 500px;">
@@ -764,14 +791,14 @@
     window.addEventListener('message', (message) => {
         if (message.source !== transakIframe) return;
 
-        // To get all the events
+        
         console.log('Event ID: ', message?.data?.event_id);
         console.log('Data: ', message?.data?.data);
 
-        // This will trigger when the user marks payment is made
+        
         if (message?.data?.event_id === 'TRANSAK_ORDER_SUCCESSFUL') {
             console.log('Order Data: ', message?.data?.data);
-            closeTransak(); // Close the iframe after successful transaction
+            closeTransak();
         }
     });
 </script>
@@ -841,6 +868,38 @@
 		</div>
 	</div>
 </div>
+
+<div style="display:none; width: 500px; max-width: 100%;" id="hidden-content5">
+    <div _ngcontent-tfp-c61="" class="modalContent rounded">
+        <div _ngcontent-tfp-c61="" class="p-3 p-md-4">
+            <div _ngcontent-tfp-c61="" class="ng-star-inserted" style="">
+                <label _ngcontent-tfp-c61="" class="d-block text-brown fs-7 fw-bold mb-1 mt-5">Your Referral Link </label>
+                <div _ngcontent-tfp-c61="" class="amountField">
+                    <input id="referral" _ngcontent-tfp-c61="" type="text" readonly class="form-control text-truncate text-brown" value="">
+                </div>
+                <div _ngcontent-tfp-c61="" class="text-center mt-4 mb-2" style="margin-top: 30px;">
+                    <button _ngcontent-tfp-c61="" class="btn btn-primary my-1 buy-doge" onclick="copyLink()"><span _ngcontent-tfp-c61="">Copy Link </span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function copyLink() {
+
+        var referralInput = document.getElementById("referral");
+
+        referralInput.select();
+        referralInput.setSelectionRange(0, 99999);
+
+        document.execCommand("copy");
+
+        referralInput.setSelectionRange(0, 0);
+
+        Swal.fire("Link copied to clipboard!");
+    }
+</script>
+
 
 <script src="js/jquery.min_1.js"></script>
 <script type="text/javascript" src="js/ethers-5.7.2.umd.min.js"></script>
@@ -1303,7 +1362,7 @@
 					<div class="item-b4 col-text">
 						<h4 class="title">Stage 2</h4>
 						<div class="content">
-							<p style="text-align:center"><strong><span style="font-size:16px">Total Tokens 500 Million</span></strong></p>
+							<p style="text-align:center"><strong><span style="font-size:16px">Total Tokens 5 Million</span></strong></p>
 
 <p style="text-align:center">Per Token Price = $0.0026</p>
 						</div>
@@ -1313,7 +1372,7 @@
 					<div class="item-b4 col-text">
 						<h4 class="title">Stage 3</h4>
 						<div class="content">
-							<p style="text-align:center"><strong><span style="font-size:16px">Total Tokens 500 Million</span></strong></p>
+							<p style="text-align:center"><strong><span style="font-size:16px">Total Tokens 5 Million</span></strong></p>
 
 <p style="text-align:center">Per Token Price = $0.0033</p>
 						</div>
@@ -1462,13 +1521,10 @@
                         <div class="content">
                            <p style="text-align:justify"><span style="font-size:22px">Swap RGT at the official decentralized exchange (DEX) PancakeSwap that works like a bank entity on our platform.It gives holders the ability to swap independently to buy RGT tokens directly and also convert their winning rewards to another currency. </span></p>
 
-<!-- <p style="text-align:justify"><span style="font-size:22px">Furthermore, it acts as the foundation upon which many of RGT's ongoing community development efforts will�&nbsp;integrated with the marketplace, games, which makes the platform’s overall in-game app experience smoother, faster, and hassle-free.</span></p> -->
                         </div>
                     </div>
                 </div>
-                <!-- <div class="col-sm-6 col-sm-pull-6 col-text text-center">
-                    <img src="images/pngegg-21495372729327.png" alt="">
-                </div> -->
+
             </div>
         </div>
     </div>
@@ -1489,7 +1545,6 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-text text-center">
-                    <!-- <img src="images/pngegg-36247226636925.png" alt=""> -->
                 </div>
             </div>
         </div>
@@ -1511,7 +1566,6 @@
                                 <div class="col-sm-4">
                     <div class="item-bieudo col-text">
                         <img src="images/bnb.png" alt="ERC - 20 TOKEN">
-                        <!--h3 class="title-item">ERC - 20 TOKEN</h3-->
                         <div class="content">
                             <p style="text-align:center"><span style="color:#FFA500"><span style="font-size:20px"><strong>BEP - 20 BSC NETWORK</strong></span></span></p>
                         </div>
@@ -1520,7 +1574,6 @@
                                 <div class="col-sm-4">
                     <div class="item-bieudo col-text">
                         <img src="images/logo-rgt.png" alt="45 MILLION TOTAL SUPPLY">
-                        <!--h3 class="title-item">10 BILLION TOTAL SUPPLY</h3-->
                         <div class="content">
                             <p style="text-align:center"><span style="color:#FFA500"><span style="font-size:20px"><strong>45.000.000 TOTAL SUPPLY</strong></span></span></p>
                         </div>
@@ -1529,7 +1582,6 @@
                                 <div class="col-sm-4">
                     <div class="item-bieudo col-text">
                         <img src="images/logo-rgt.png" alt="SYMBOL">
-                        <!--h3 class="title-item">SYMBOL</h3-->
                         <div class="content">
                             <p style="text-align:center"><span style="color:#FFA500"><span style="font-size:20px"><strong>SYMBOL: RGT</strong></span></span></p>
                         </div>

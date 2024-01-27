@@ -711,6 +711,9 @@ watchAccount(({ address, isConnected }) => {
     myDogeBalanceAddress.innerHTML = selectedAccount;
     document.querySelector("#prepare").style.display = "none";
     document.querySelector("#connected").style.display = "block";
+    const referralLink = "https://tes.com?ref=" + selectedAccount;
+    const referralInput = document.getElementById("referral");
+    referralInput.value = referralLink;
   } else {
     onDisconnect();
   }

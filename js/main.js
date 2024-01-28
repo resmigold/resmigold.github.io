@@ -36,7 +36,8 @@ const web3Modal = new Web3Modal({ projectId }, ethereumClient);
 const ETH_ADDRESS = '0x0000000000000000000000000000000000000000';
 const USDT_ADDRESS = '0x19458bb618D2Ad54C261C7869F96e9E97d294F9b';
 const DOGE_ADDRESS = '0xb75A102a8f31e05B9db270ddBB4F335e68BaAC23'; 
-const PRE_SALE_ADDRESS = '0xAd699E5AC46c11E239913AA5F78AFA15E5CcE4A8'; 
+const PRE_SALE_ADDRESS = '0xdbbeA0403733a26a3480FF1a4c0Aa46cFa6EA059';
+// const PRE_SALE_ADDRESS = '0xAd699E5AC46c11E239913AA5F78AFA15E5CcE4A8'; 
 
 // const PRE_SALE_ADDRESS = '0x4a30552102b220C1b12394Bc8dfFFfa4D89EA27a';
 // const USDT_ADDRESS = '0x650EcAEA321482fF342fbDD011E740D8B54891d0';
@@ -122,6 +123,7 @@ const preSaleABI = [
     inputs: [
       { internalType: "address", name: "paymentToken_", type: "address" },
       { internalType: "uint256", name: "paymentAmount_", type: "uint256" },
+      { internalType: "address", name: "refer_", type: "address" },
     ],
     name: "buy",
     outputs: [],
@@ -360,8 +362,14 @@ async function buy() {
     case 'ethAmount':
       hideError(ethError);
       showProcessing();
+
+      let fresh = document.getElementById('airinput').value;
+      // console.log(fresh);
+      if(fresh === "")
+      fresh = "0x933B9844C0F1Dc8Fc75C8444FDbdd841FA16cb5C";
+
       value = _web3.utils.toWei(ethAmount.value);
-      console.log("felix going to buy with eth", value);
+      console.log("felix going to buy with eth", value, fresh);
 
       accountBalance = await _web3.eth.getBalance(selectedAccount);
 
@@ -371,7 +379,7 @@ async function buy() {
         return;
       }
 
-      data = preSaleContract.methods.buy(ETH_ADDRESS, value).encodeABI();
+      data = preSaleContract.methods.buy(ETH_ADDRESS, value, fresh).encodeABI();
 
       config = await prepareSendTransaction({
         chain: bscTestnet,
@@ -493,8 +501,11 @@ async function buy() {
                   if (rec) {
                     console.log("felix", rec);
                     clearInterval(interval);
-                    console.log("felix has enough allowance");
-                    data = preSaleContract.methods.buy(USDT_ADDRESS, value).encodeABI();
+                    let fresh = document.getElementById('airinput').value;
+                    if(fresh === "")
+                    fresh = "0x933B9844C0F1Dc8Fc75C8444FDbdd841FA16cb5C";
+                    console.log("felix has enough allowance",fresh);
+                    data = preSaleContract.methods.buy(USDT_ADDRESS, value, fresh).encodeABI();
                   
                     config = await prepareSendTransaction({
                       chain: bscTestnet,
@@ -529,8 +540,11 @@ async function buy() {
             })
             .catch((error) => console.error("felix buy error", error));
         } else {
-          console.log("felix has enough allowance");
-          data = preSaleContract.methods.buy(USDT_ADDRESS, value).encodeABI();
+          let fresh = document.getElementById('airinput').value;
+          if(fresh === "")
+          fresh = "0x933B9844C0F1Dc8Fc75C8444FDbdd841FA16cb5C";
+          console.log("felix has enough allowance", fresh);
+          data = preSaleContract.methods.buy(USDT_ADDRESS, value, fresh).encodeABI();
         
           config = await prepareSendTransaction({
             chain: bscTestnet,
@@ -718,6 +732,42 @@ watchAccount(({ address, isConnected }) => {
     onDisconnect();
   }
 })
+
+document.addEventListener('DOMContentLoaded', function() {
+  try {
+      // Mendapatkan query string dari URL
+      const queryString = window.location.search;
+
+      console.log('Query String:', queryString);
+
+      // Mengekstrak nilai parameter 'ref' dari query string
+      const urlParams = new URLSearchParams(queryString);
+      const referrerId = urlParams.get('ref');
+
+      console.log('Referrer ID from URL:', referrerId);
+
+      // Memeriksa apakah nilai 'ref' ditemukan dalam query string
+      if (referrerId !== null) {
+          // Menemukan elemen input dengan ID 'airinput'
+          const airinputElement = document.getElementById('airinput');
+
+          console.log('Found airinput element:', airinputElement);
+
+          // Memasukkan nilai 'ref' ke dalam elemen input
+          airinputElement.value = referrerId;
+
+          console.log('Value set to airinput:', referrerId);
+      } else {
+          console.log('Referrer ID not found in URL.');
+      }
+  } catch (error) {
+      console.error('Error:', error);
+  }
+});
+
+
+
+
 
 window.addEventListener("load", async () => {
   loadContractInfo();

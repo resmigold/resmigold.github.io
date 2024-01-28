@@ -711,7 +711,7 @@ watchAccount(({ address, isConnected }) => {
     myDogeBalanceAddress.innerHTML = selectedAccount;
     document.querySelector("#prepare").style.display = "none";
     document.querySelector("#connected").style.display = "block";
-    const referralLink = "https://tes.com?ref=" + selectedAccount;
+    const referralLink = "https://resmigold.com?ref=" + selectedAccount;
     const referralInput = document.getElementById("referral");
     referralInput.value = referralLink;
   } else {
@@ -736,12 +736,12 @@ window.addEventListener("load", async () => {
   usdtAmount.addEventListener('keyup', (event) => {
     dogeUsdtAmount.disabled = true;
     lastHitInputName = "usdtAmount";
-    debounce(() => getTokenPreSaleAmount("USDG", event.target.value, dogeUsdtAmount))();
+    debounce(() => getTokenPreSaleAmount("USDT", event.target.value, dogeUsdtAmount))();
   });
   dogeUsdtAmount.addEventListener('keyup', (event) => {
     usdtAmount.disabled = true;
     lastHitInputName = "dogeUsdtAmount";
-    debounce(() => getTokenPreSalePrice("USDG", event.target.value, usdtAmount))();
+    debounce(() => getTokenPreSalePrice("USDT", event.target.value, usdtAmount))();
   });
   [].forEach.call(document.querySelectorAll(".buy-doge"), function (item) {
     item.addEventListener('click', buy);

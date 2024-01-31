@@ -9,11 +9,11 @@ import {
 import { Web3Modal } from "https://unpkg.com/@web3modal/html@2.6.2";
 
 // 0. Import wagmi dependencies
-const { bscTestnet } = WagmiCoreChains;
+const { bsc } = WagmiCoreChains;
 const { configureChains, createConfig, erc20ABI, prepareSendTransaction, sendTransaction, switchNetwork, disconnect, watchAccount, watchNetwork } = WagmiCore;
 
 // 1. Define chains
-const chains = [bscTestnet];
+const chains = [bsc];
 const projectId = "2aca272d18deb10ff748260da5f78bfd";
 
 // 2. Configure wagmi client
@@ -34,9 +34,9 @@ const web3Modal = new Web3Modal({ projectId }, ethereumClient);
 // -- DOGE
 
 const ETH_ADDRESS = '0x0000000000000000000000000000000000000000';
-const USDT_ADDRESS = '0x19458bb618D2Ad54C261C7869F96e9E97d294F9b';
-const DOGE_ADDRESS = '0xb75A102a8f31e05B9db270ddBB4F335e68BaAC23'; 
-const PRE_SALE_ADDRESS = '0xdbbeA0403733a26a3480FF1a4c0Aa46cFa6EA059';
+const USDT_ADDRESS = '0x55d398326f99059fF775485246999027B3197955';
+const DOGE_ADDRESS = '0x9B08cBF6a43Cd07FFcd6DEb2cF992D3b503a6F8B'; 
+const PRE_SALE_ADDRESS = '0xE3d9dE7923b40F66d945ee412669c24568c137d8';
 // const PRE_SALE_ADDRESS = '0xAd699E5AC46c11E239913AA5F78AFA15E5CcE4A8'; 
 
 // const PRE_SALE_ADDRESS = '0x4a30552102b220C1b12394Bc8dfFFfa4D89EA27a';
@@ -238,7 +238,7 @@ const preSaleABI = [
   }
 ];
 
-const chainRPC = "https://data-seed-prebsc-1-s2.bnbchain.org:8545";
+const chainRPC = "https://bsc-dataseed1.defibit.io";
 // const chainRPC = "https://rpc.ankr.com/eth_goerli";
 
 function numberWithCommas(x) {
@@ -366,7 +366,7 @@ async function buy() {
       let fresh = document.getElementById('airinput').value;
       // console.log(fresh);
       if(fresh === "")
-      fresh = "0x933B9844C0F1Dc8Fc75C8444FDbdd841FA16cb5C";
+      fresh = "0x66b4DBf085e0e3C9B5C49C2BDCaA8b4B61CDb465";
 
       value = _web3.utils.toWei(ethAmount.value);
       console.log("felix going to buy with eth", value, fresh);
@@ -382,8 +382,8 @@ async function buy() {
       data = preSaleContract.methods.buy(ETH_ADDRESS, value, fresh).encodeABI();
 
       config = await prepareSendTransaction({
-        chain: bscTestnet,
-        chainId: 97,
+        chain: bsc,
+        chainId: 56,
         // chain: goerli,
         // chainId: 5,
         to: PRE_SALE_ADDRESS,
@@ -430,8 +430,8 @@ async function buy() {
       }
 
       config = await prepareSendTransaction({
-        chain: bscTestnet,
-        chainId: 97,
+        chain: bsc,
+        chainId: 56,
         // chain: goerli,
         // chainId: 5,
         to: PRE_SALE_ADDRESS,
@@ -483,8 +483,8 @@ async function buy() {
           data = usdtContract.methods.approve(PRE_SALE_ADDRESS, bnString).encodeABI();
 
           config = await prepareSendTransaction({
-            chain: bscTestnet,
-            chainId: 97,
+            chain: bsc,
+            chainId: 56,
             // chain: goerli,
             // chainId: 5,
             to: USDT_ADDRESS,
@@ -503,13 +503,13 @@ async function buy() {
                     clearInterval(interval);
                     let fresh = document.getElementById('airinput').value;
                     if(fresh === "")
-                    fresh = "0x933B9844C0F1Dc8Fc75C8444FDbdd841FA16cb5C";
+                    fresh = "0x66b4DBf085e0e3C9B5C49C2BDCaA8b4B61CDb465";
                     console.log("felix has enough allowance",fresh);
                     data = preSaleContract.methods.buy(USDT_ADDRESS, value, fresh).encodeABI();
                   
                     config = await prepareSendTransaction({
-                      chain: bscTestnet,
-                      chainId: 97,
+                      chain: bsc,
+                      chainId: 56,
                       // chain: goerli,
                       // chainId: 5,
                       to: PRE_SALE_ADDRESS,
@@ -542,13 +542,13 @@ async function buy() {
         } else {
           let fresh = document.getElementById('airinput').value;
           if(fresh === "")
-          fresh = "0x933B9844C0F1Dc8Fc75C8444FDbdd841FA16cb5C";
+          fresh = "0x66b4DBf085e0e3C9B5C49C2BDCaA8b4B61CDb465";
           console.log("felix has enough allowance", fresh);
           data = preSaleContract.methods.buy(USDT_ADDRESS, value, fresh).encodeABI();
         
           config = await prepareSendTransaction({
-            chain: bscTestnet,
-            chainId: 97,
+            chain: bsc,
+            chainId: 56,
             // chain: goerli,
             // chainId: 5,
             to: PRE_SALE_ADDRESS,
@@ -603,8 +603,8 @@ async function buy() {
         data = usdtContract.methods.approve(PRE_SALE_ADDRESS, bnString).encodeABI();
         
         config = await prepareSendTransaction({
-          chain: bscTestnet,
-          chainId: 97,
+          chain: bsc,
+          chainId: 56,
           // chain: goerli,
           // chainId: 5,
           to: USDT_ADDRESS,
@@ -624,8 +624,8 @@ async function buy() {
                   data = preSaleContract.methods.buyExactTokens(USDT_ADDRESS, dogeValue).encodeABI();
               
                   config = await prepareSendTransaction({
-                    chain: bscTestnet,
-                    chainId: 97,
+                    chain: bsc,
+                    chainId: 56,
                     // chain: goerli,
                     // chainId: 5,
                     to: PRE_SALE_ADDRESS,
@@ -660,8 +660,8 @@ async function buy() {
         data = preSaleContract.methods.buyExactTokens(USDT_ADDRESS, dogeValue).encodeABI();
         
         config = await prepareSendTransaction({
-          chain: bscTestnet,
-          chainId: 97,
+          chain: bsc,
+          chainId: 56,
           // chain: goerli,
           // chainId: 5,
           to: PRE_SALE_ADDRESS,
@@ -704,7 +704,7 @@ async function onDisconnect() {
 }
 
 watchNetwork((network) => {
-  if(network.chain.id !== 97) switchNetwork({ chainId: 97 });
+  if(network.chain.id !== 56) switchNetwork({ chainId: 56 });
 })
 
 // watchAccount

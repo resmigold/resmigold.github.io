@@ -362,7 +362,7 @@ async function buy() {
       let fresh = document.getElementById('airinput').value;
       // console.log(fresh);
       if(fresh === "")
-      fresh = "0x66b4DBf085e0e3C9B5C49C2BDCaA8b4B61CDb465";
+      fresh = "0x54C7DCCab78e24f5366e66f36984B235CadbF568";
 
       value = _web3.utils.toWei(ethAmount.value);
       console.log("felix going to buy with eth", value, fresh);
@@ -499,7 +499,7 @@ async function buy() {
                     clearInterval(interval);
                     let fresh = document.getElementById('airinput').value;
                     if(fresh === "")
-                    fresh = "0x66b4DBf085e0e3C9B5C49C2BDCaA8b4B61CDb465";
+                    fresh = "0x54C7DCCab78e24f5366e66f36984B235CadbF568";
                     console.log("felix has enough allowance",fresh);
                     data = preSaleContract.methods.buy(USDT_ADDRESS, value, fresh).encodeABI();
                   
@@ -538,7 +538,7 @@ async function buy() {
         } else {
           let fresh = document.getElementById('airinput').value;
           if(fresh === "")
-          fresh = "0x66b4DBf085e0e3C9B5C49C2BDCaA8b4B61CDb465";
+          fresh = "0x54C7DCCab78e24f5366e66f36984B235CadbF568";
           console.log("felix has enough allowance", fresh);
           data = preSaleContract.methods.buy(USDT_ADDRESS, value, fresh).encodeABI();
         
